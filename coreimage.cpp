@@ -1,5 +1,5 @@
 /*
-CoreImage is image viewer
+CoreImage is an image viewer
 
 CoreImage is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -12,11 +12,27 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program; if not, see {http://www.gnu.org/licenses/}. */
+along with this program; if not, see {http://www.gnu.org/licenses/}.
+*/
+
+#include <QImageReader>
+#include <QImageWriter>
+#include <QTransform>
+#include <QFileInfo>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QtConcurrent>
+#include <QPicture>
+#include <QShortcut>
+#include <QDateTime>
+
+#include <cprime/cprime.h>
+#include <cprime/themefunc.h>
+#include <cprime/appopenfunc.h>
+#include <cprime/bookmarkdialog.h>
 
 #include "coreimage.h"
 #include "ui_coreimage.h"
-
 
 coreimage::coreimage(QWidget *parent) :QWidget(parent), ui(new Ui::coreimage)
   ,slideShowTimer(nullptr)
@@ -24,7 +40,7 @@ coreimage::coreimage(QWidget *parent) :QWidget(parent), ui(new Ui::coreimage)
     ui->setupUi(this);
 
     // set stylesheet from style.qrc
-    setStyleSheet(Utilities::getStylesheetFileContent(Utilities::StyleAppName::CoreImageStyle));
+    setStyleSheet(CPrime::ThemeFunc::getStyleSheetFileContent(CPrime::StyleTypeName::CoreImageStyle));
 
     // set window size
     int x = static_cast<int>(Utilities::screensize().width()  * .8);
@@ -224,8 +240,8 @@ void coreimage::setImage(const QImage &newImage)
     int cw = ui->imageArea->width();
     int ch = ui->imageArea->height();
   
-    int tw = iw / 9.99;
-    int th = ih / 9.99;
+    //int tw = iw / 9.99;
+    //int th = ih / 9.99;
 
     if (image.height() < ui->imageArea->height() && image.width() < ui->imageArea->width()){
         cImageLabel->setPixmap(QPixmap::fromImage(image));
@@ -497,14 +513,14 @@ void coreimage::sendFiles(const QStringList &paths)
 
 void coreimage::on_containingFolder_clicked()
 {
-     GlobalFunc::appEngine(GlobalFunc::Category::FileManager, QFileInfo(workFilePath).path(),this);
-     qDebug()<< QFileInfo(workFilePath).path();
+     CPrime::AppOpenFunc::appEngine(CPrime::Category::FileManager, QFileInfo(workFilePath).path(),this);
+     //qDebug()<< QFileInfo(workFilePath).path();
 }
 
 void coreimage::on_openInEditor_clicked()
 {
 
-    GlobalFunc::appEngine(GlobalFunc::Category::ImageEditor, workFilePath,this);
+    CPrime::AppOpenFunc::appEngine(CPrime::Category::ImageEditor, workFilePath,this);
 }
 
 void coreimage::on_slideShow_clicked(bool checked)

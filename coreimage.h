@@ -20,33 +20,11 @@ along with this program; if not, see {http://www.gnu.org/licenses/}. */
 #include <QWidget>
 #include <QWheelEvent>
 #include <QMouseEvent>
+#include <QResizeEvent>
 #include <QScrollBar>
-#include <QScrollArea>
 #include <QListWidgetItem>
-#include <QPushButton>
 #include <QLabel>
 #include <QSpacerItem>
-#include <QFileDialog>
-#include <QStandardPaths>
-#include <QImageReader>
-#include <QImageWriter>
-#include <QTransform>
-#include <QFileInfo>
-#include <QBuffer>
-#include <QDataStream>
-#include <QShortcut>
-#include <QAbstractScrollArea>
-#include <QSpacerItem>
-#include <QtWidgets>
-#include <QDateTime>
-#include <QtConcurrent>
-#include <QShortcut>
-#include <QStringList>
-
-#include <cprime/utilities.h>
-#include <cprime/globalfunctions.h>
-#include <cprime/bookmarkdialog.h>
-
 
 namespace Ui {
 class coreimage;
@@ -96,12 +74,15 @@ protected:
 private:
     Ui::coreimage *ui;
     QSpacerItem *hSpacer;   
-    QTimer* slideShowTimer;
+    QTimer *slideShowTimer;
     QStringList images;
+
+    // A temporary image
     QImage image;
     double scaleFactor;
     QLabel *cImageLabel;
-    bool   mousePressed , sildeShow;
+    bool   mousePressed;
+    bool   sildeShow;
     QPoint mousePos;
     QPoint wndPos;
 
